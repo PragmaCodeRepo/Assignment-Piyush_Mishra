@@ -11,6 +11,7 @@ from rest_framework.views import APIView
 from rest_framework.response import Response
 from rest_framework.permissions import IsAuthenticated
 from rest_framework import status
+from .models import Chat
 User = get_user_model()
 
 class RegisterView(generics.CreateAPIView):
@@ -66,9 +67,22 @@ class ChatWithGPTView(APIView):
             )
 
             gpt_response = response.choices[0].message['content']
+
+            # Save the chat to the database
+            Chat.objects.create(user=request.user, message=user_message, response=gpt_response)
+
             return Response({"response": gpt_response})
         except Exception as e:
             return Response({"error": str(e)}, status=status.HTTP_500_INTERNAL_SERVER_ERROR)
+
+class ChatHistoryView(APIView):
+    authentication_classes = [JWTAuthentication]
+    permission_classes = [IsAuthenticated]
+
+    def get(self, request):
+        chats = Chat.objects.filter(user=request.user).order_by('-timestamp')
+        chat_history = [{"message": chat.message, "response": chat.response, "timestamp": chat.timestamp} for chat in chats]
+        return Response(chat_history, status=status.HTTP_200_OK)
 # class ChatWithLLMView(APIView):
 #     authentication_classes = [JWTAuthentication]
 #     permission_classes = [IsAuthenticated]
