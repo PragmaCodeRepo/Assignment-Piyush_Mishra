@@ -1,6 +1,7 @@
-# Chat Application (demo video is also attached with name of demo_video.mkv)
+# Chat Application 
 
 This is a full-stack chat application with a Django backend and a React frontend.
+(demo video is also attached with name of demo_video.mkv)
 
 ## Table of Contents
 
