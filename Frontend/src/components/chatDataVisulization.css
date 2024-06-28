@@ -1,0 +1,27 @@
+/* chatDataVisualization.css */
+
+.bg-white {
+    background-color: #fff;
+    padding: 20px;
+    border-radius: 8px;
+    box-shadow: 0 0 20px rgba(0, 0, 0, 0.1);
+}
+
+.chart-container {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+    align-items: center;
+}
+
+.chart {
+    width: 90%;
+    max-width: 600px;
+    height: 300px; /* Adjust the height as needed */
+}
+
+h2 {
+    text-align: center;
+    color: #333;
+    margin-bottom: 20px;
+}
